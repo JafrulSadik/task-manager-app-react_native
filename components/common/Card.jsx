@@ -1,10 +1,10 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 
 
-export default function Card() {
+export default function Card({navigation}) {
 
     const [checked, setChecked] = React.useState(false);
   
@@ -31,9 +31,13 @@ export default function Card() {
                 </View>
             </View>
 
-            <View style={styles.navigation}> 
+            <TouchableOpacity 
+                style={styles.navigation}
+                onPress={()=> navigation.navigate("Details")}
+
+            > 
                 <MaterialIcons name="navigate-next" size={24} color="steelblue" />
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

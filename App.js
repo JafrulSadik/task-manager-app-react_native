@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import CreateTask from './components/screens/CreateTask';
 import Details from './components/screens/Details';
 import Home from './components/screens/Home';
 
@@ -27,6 +28,18 @@ export default function App() {
         <Stack.Screen 
           name="Details" 
           component={Details} 
+          options={{
+            title: "Task1",
+            headerStyle:{
+              backgroundColor: "steelblue"
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen 
+          name="CreateTask" 
+          component={CreateTask} 
           options={{
             title: "Create",
             headerStyle:{

@@ -23,10 +23,10 @@ export default function Home({navigation}) {
             </TouchableOpacity>
         </View>
         
-        {taskStatus ? <Pending/> : <Completed/>}
+        {taskStatus ? <Pending navigation={navigation}/> : <Completed navigation={navigation}/>}
         <TouchableOpacity 
             style={styles.createButton}
-            onPress={()=>navigation.navigate("Details")}
+            onPress={()=>navigation.navigate("CreateTask")}
         >
             <AntDesign name="plus" size={24} color="white" />
         </TouchableOpacity>

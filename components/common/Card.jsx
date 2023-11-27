@@ -43,7 +43,7 @@ export default function Card({navigation, task}) {
 
             <TouchableOpacity 
                 style={styles.navigation}
-                onPress={()=> navigation.navigate("Details")}
+                onPress={()=> navigation.navigate("Details", {task})}
 
             > 
                 <MaterialIcons name="navigate-next" size={24} color="steelblue" />

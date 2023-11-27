@@ -33,7 +33,6 @@ export const TaskProvider = ({ children }) => {
         tx.executeSql("SELECT * FROM tasks", null,
           (txObject, resultSet) => {
             setTasks(resultSet.rows._array)
-            console.log(tasks);
           }
         )
       })
@@ -47,7 +46,6 @@ export const TaskProvider = ({ children }) => {
   const CreateTask = (props) => {
     const {taskName, taskDetails, navigation} = props;
 
-    console.log("task  " + taskDetails);
 
     // console.log(props);
     try{
@@ -67,13 +65,16 @@ export const TaskProvider = ({ children }) => {
   };
 
   // Deleted task function
-  const DeleteTask = (id) =>{
+  const DeleteTask = (props) =>{
+    const {task, navigation} = props;
     try {
       db.transaction(tx =>{
-        tx.executeSql( `DELETE FROM tasks WHERE id=${id}`)
+        tx.executeSql( `DELETE FROM tasks WHERE id=${task?.id}`)
       })
 
-      fetchTask()
+      ToastAndroid.show('Task Deleted Successfully!', ToastAndroid.SHORT);
+      fetchTask();
+      navigation.goBack();
     } catch (error) {
       console.log(error);
     }
@@ -92,32 +93,13 @@ export const TaskProvider = ({ children }) => {
     }
   }
 
-  // Get a single task
-  const SingleTask = (id) =>{
-    try {
-      let data = [] 
-      db.transaction(tx =>{
-        tx.executeSql(`SELECT * FROM tasks WHERE id=${1}`, null,
-          (txObject, resultSet) => {
-            console.log(resultSet.rows._array);
-            setTask(resultSet.rows._array)
-            return task
-          }
-        )
-      })
-      console.log(data);
 
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   values ={
     tasks,
     CreateTask,
     DeleteTask,
-    CompletedTask,
-    SingleTask
+    CompletedTask
   }
 
   // You can add more functions for deleting tasks, updating, etc.

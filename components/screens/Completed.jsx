@@ -3,19 +3,21 @@ import { ScrollView, StyleSheet } from 'react-native'
 import { TaskContext } from '../../context/TaskProvider'
 import Card from '../common/Card'
 
+
 export default function Completed({navigation}) {
   const {tasks} = useContext(TaskContext)
 
   const completedTasks = tasks.filter(task => task?.pending === 0)
 
   return (
-      <ScrollView 
-      contentContainerStyle={styles.contentContainer}
-        >
-        {
-          completedTasks?.map(task =><Card key={task?.id} navigation={navigation} task={task}/>)
-        } 
-      </ScrollView>
+    <ScrollView 
+    contentContainerStyle={styles.contentContainer}
+      >
+      {
+        completedTasks?.map(task =><Card key={task?.id} navigation={navigation} task={task}/>)
+      } 
+    </ScrollView>
+      
   )
 }
 

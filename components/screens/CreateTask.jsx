@@ -1,12 +1,16 @@
 import { AntDesign } from '@expo/vector-icons';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { TaskContext } from '../../context/TaskProvider';
 
-
-export default function CreateTask() {
+export default function CreateTask({navigation}) {
 
   const [date, setDate] = useState(new Date(1598051730000));
+  const [taskName, settaskName] = useState("");
+  const [taskDetails, settaskDetails] = useState("")
+
+  const {CreateTask} = useContext(TaskContext)
 
     const onChange = (event, selectedDate) => {
       const currentDate = selectedDate;
@@ -38,6 +42,7 @@ export default function CreateTask() {
         <TextInput
           style={styles.input}
           placeholder='Title'
+          onChangeText={(text) => settaskName(text)}
         />
         <Text style={styles.titleLabel}>Enter details:</Text>
         <TextInput
@@ -47,6 +52,7 @@ export default function CreateTask() {
           multiline
           numberOfLines={5}
           maxLength={100}
+          onChangeText={(text) => settaskDetails(text)}
         />
         <Text style={styles.titleLabel}>Select Date & Time :</Text>
 
@@ -74,7 +80,10 @@ export default function CreateTask() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.saveBtn}>
+        <TouchableOpacity 
+          style={styles.saveBtn}
+          onPress={() => CreateTask({navigation,taskName, taskDetails})}
+          >
           <Text style={styles.saveText}>Save</Text>
         </TouchableOpacity>
     </ScrollView>

@@ -10,26 +10,33 @@ export default function Home({navigation}) {
 
   return (
     <View style={styles.container}>
+
         <View style={styles.taskStatus}>
+
             <TouchableOpacity
                 onPress={()=> setTaskStatus(true)}
                  style={[styles.taskStatusOption, taskStatus ? styles.selected : styles.notSelected]}>
                 <Text style={[styles.taskStatusText, taskStatus ? styles.selectedText : styles.notSelected]}>Pending</Text>
             </TouchableOpacity>
+
             <TouchableOpacity 
                 onPress={()=> setTaskStatus(false)}
                 style={[styles.taskStatusOption, !taskStatus ? styles.selected : styles.notSelected]}>
                 <Text style={[styles.taskStatusText, !taskStatus ? styles.selectedText : styles.notSelected]}>Completed</Text>
             </TouchableOpacity>
+
         </View>
         
         {taskStatus ? <Pending navigation={navigation}/> : <Completed navigation={navigation}/>}
+
         <TouchableOpacity 
             style={styles.createButton}
-            onPress={()=>navigation.navigate("CreateTask")}
+            onPress={()=> navigation.navigate("CreateTask")}
+
         >
             <AntDesign name="plus" size={24} color="white" />
         </TouchableOpacity>
+        
     </View>
   )
 }
@@ -52,10 +59,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         padding: 8,
-        fontSize: 10,
     },
     taskStatusText:{
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 14
     },
     selected:{
         backgroundColor: 'steelblue',

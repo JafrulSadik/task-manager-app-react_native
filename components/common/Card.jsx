@@ -1,30 +1,40 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
+import { TaskContext } from '../../context/TaskProvider';
 
 
-export default function Card({navigation}) {
+export default function Card({navigation, task}) {
 
-    const [checked, setChecked] = React.useState(false);
+    const {CompletedTask} = useContext(TaskContext)
+
+    const [checked, setChecked] = useState(false);
+
+
+    const checkboxClicked = () =>{
+        setChecked(!checked);
+        CompletedTask(task?.id)
+    }
   
 
     return (
         <View style={styles.cardBody}>
-            <View style={styles.checkbox}>
-                <Checkbox
-                    status={checked ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        setChecked(!checked);
-                    }}
-                    color= "steelblue"
-                    uncheckedColor='steelblue'
-                />
-            </View>
+            {
+                task?.pending ? 
+                <View style={styles.checkbox}>
+                    <Checkbox
+                        status={checked ? 'checked' : 'unchecked'}
+                        onPress={() => checkboxClicked()}
+                        color= "steelblue"
+                        uncheckedColor='steelblue'
+                    />
+                </View> : <View style={styles.completed}/>
+            }
 
             <View style={styles.details}>
                 <View>
-                    <Text style={{fontWeight: 'bold', fontSize:15, color:'steelblue'}}>Task for today</Text>
+                    <Text style={{fontWeight: 'bold', fontSize:16, color:'steelblue'}}>{task?.task_name}</Text>
                 </View>
                 <View>
                     <Text style={{fontSize:12, color:'gray'}}>Today at 1:27 AM</Text>
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f8f8',
         borderRadius: 15,
         shadowColor: "#000",
-        height: 80,
+        height: 85,
         shadowOffset: {
             width: 0,
             height: 1,
@@ -72,6 +82,9 @@ const styles = StyleSheet.create({
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    completed:{
+        marginLeft: 20
     }
 
 })

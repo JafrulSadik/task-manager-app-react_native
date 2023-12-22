@@ -3,29 +3,29 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function DateTimePicker() {
-    const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date(1598051730000));
 
-    const onChange = (event, selectedDate) => {
-      const currentDate = selectedDate;
-      setDate(currentDate);
-    };
-  
-    const showMode = (currentMode) => {
-      DateTimePickerAndroid.open({
-        value: date,
-        onChange,
-        mode: currentMode,
-        is24Hour: true,
-      });
-    };
-  
-    const showDatepicker = () => {
-      showMode('date');
-    };
-  
-    const showTimepicker = () => {
-      showMode('time');
-    };
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
   
     return (
         <View style={styles.container}>

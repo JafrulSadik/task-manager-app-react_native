@@ -16,7 +16,7 @@ export const TaskProvider = ({ children }) => {
   // Default create db if not exist
   useEffect(() => {
     db.transaction((tx) => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, task_name TEXT, task_details TEXT, pending BOOLEAN)')
+      tx.executeSql('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, task_name TEXT, task_details TEXT, pending BOOLEAN, date TEXT, time TEXT)')
     })
 
     db.transaction(tx =>{
@@ -44,13 +44,13 @@ export const TaskProvider = ({ children }) => {
 
   
   const CreateTask = (props) => {
-    const {taskName, taskDetails, navigation} = props;
+    const {taskName, taskDetails, date, time, navigation} = props;
 
 
     // console.log(props);
     try{
       db.transaction( (tx) => {
-        tx.executeSql(`INSERT INTO tasks(task_name,task_details, pending) VALUES (?, ?, ?)`, [taskName, taskDetails, true])
+        tx.executeSql(`INSERT INTO tasks(task_name,task_details, pending, date, time) VALUES (?, ?, ?, ?, ?)`, [taskName, taskDetails, true, date, time])
       })
 
       fetchTask()
@@ -79,6 +79,23 @@ export const TaskProvider = ({ children }) => {
       console.log(error);
     }
   }
+  // Update task function
+  const UpdateTask = (props) =>{
+    const {navigation, ...rest} = props;
+    console.log(rest);
+    try {
+      db.transaction(tx =>{
+        tx.executeSql( `UPDATE tasks SET task_name=${rest.taskName},task_details=${rest.taskDetails}, date=${rest.date},time =${rest.time}  WHERE id=${rest?.id}`)
+      })
+
+      ToastAndroid.show('Task Updated Successfully!', ToastAndroid.SHORT);
+      fetchTask();
+      console.log(tasks);
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // Completed task function
   const CompletedTask = (id) =>{
@@ -99,7 +116,8 @@ export const TaskProvider = ({ children }) => {
     tasks,
     CreateTask,
     DeleteTask,
-    CompletedTask
+    CompletedTask,
+    UpdateTask
   }
 
   // You can add more functions for deleting tasks, updating, etc.

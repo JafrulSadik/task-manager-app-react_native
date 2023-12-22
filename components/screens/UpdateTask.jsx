@@ -4,12 +4,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { TaskContext } from '../../context/TaskProvider';
 
-export default function CreateTask({navigation}) {
-  
+export default function UpdateTask({navigation,route}) {
   const [date, setDate] = useState(new Date());
+  const id = route.params.id;
+  const [dateNtime, setdateNtime] = useState({
+    date: route?.params?.date,
+    time: route?.params?.time
+  })
 
-  const [dateNtime, setdateNtime] = useState({})
-
+  useEffect(() => {
+    getDateAndTime()
+  }, [date])
+  
   // function to get date and time
   const getDateAndTime = () =>{
     let selectedDate = date.toLocaleDateString();
@@ -24,16 +30,11 @@ export default function CreateTask({navigation}) {
 
   }
 
-  useEffect(() => {
-    getDateAndTime()
-  }, [date])
   
   // Local states
-  const [taskName, settaskName] = useState("");
-  const [taskDetails, settaskDetails] = useState("")
-
-  // Get function form global state
-  const {CreateTask} = useContext(TaskContext)
+  const [taskName, settaskName] = useState(route.params.task_name);
+  const [taskDetails, settaskDetails] = useState(route.params.task_details)
+  const {UpdateTask} = useContext(TaskContext)
 
 
   // Date and time picker functions
@@ -55,7 +56,7 @@ export default function CreateTask({navigation}) {
     showMode('date');
   };
 
-  const showTimepicker = () => {
+  const showTimepicker =() => {
     showMode('time');
   };
 
@@ -71,6 +72,7 @@ export default function CreateTask({navigation}) {
           
           <TextInput 
             style={styles.inputStyle}
+            defaultValue={taskName}
             placeholder='Enter Name.'
             onChangeText={(text) => settaskName(text)}
             ></TextInput>
@@ -83,6 +85,7 @@ export default function CreateTask({navigation}) {
           <TextInput 
             style={styles.inputStyle}
             placeholder='Enter details...'
+            defaultValue={taskDetails}
             editable
             multiline
             numberOfLines={2}
@@ -133,7 +136,7 @@ export default function CreateTask({navigation}) {
 
         <TouchableOpacity 
           style={styles.saveBtn}
-          onPress={() => CreateTask({navigation,taskName, taskDetails, date:dateNtime.date, time:dateNtime.time})}
+          onPress={() => UpdateTask({navigation, id, taskName, taskDetails, date:dateNtime.date, time:dateNtime.time})}
           >
           <Text style={styles.saveText}>Save</Text>
         </TouchableOpacity>

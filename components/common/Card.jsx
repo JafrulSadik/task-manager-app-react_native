@@ -37,7 +37,7 @@ export default function Card({navigation, task}) {
                     <Text style={{fontWeight: 'bold', fontSize:16, color:'steelblue'}}>{task?.task_name}</Text>
                 </View>
                 <View>
-                    <Text style={{fontSize:12, color:'gray'}}>Today at 1:27 AM</Text>
+                    <Text style={{fontSize:12, color:'gray'}}>{task?.date + ', ' + task?.time}</Text>
                 </View>
             </View>
 

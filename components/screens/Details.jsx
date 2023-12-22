@@ -22,15 +22,22 @@ export default function Details({navigation, route}) {
           <View style={styles.container}>
 
             <View style={styles.detailsBody}>
-              <View style={styles.titleDiv}>
+              <View style={styles.titleDiv}>   
                 <Text style={styles.taskTitle}>{task?.task_name}</Text>
               </View>
               <View style={styles.hr}></View>
               <View style={styles.detailsDiv}>
-                <Text style={styles.dateTime}>No date and time selected!</Text>
+                <Text style={styles.dateTime}>Due {task.date} at {task.time}</Text>
                 <Text style={styles.detailsTitle}>{task?.task_details}</Text>
               </View>
             </View>
+
+            <TouchableOpacity 
+                style={styles.updateBtn}
+                onPress={()=> navigation.navigate("UpdateTask", task)}
+                >
+                <Text style={styles.updateText}>Update</Text>
+              </TouchableOpacity>
 
             <TouchableOpacity 
                 style={styles.deleteBtn}
@@ -45,8 +52,8 @@ export default function Details({navigation, route}) {
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalStyle}>
             <View>
               <View style={styles.modalTop}>
-              <MaterialCommunityIcons name="delete-circle-outline" size={40} color="red" />
-                <Text style={{fontWeight: '400', color: 'red', fontSize: 20}}>Are you sure?</Text>
+                <MaterialCommunityIcons name="delete-empty-outline" size={42} color="#ED4E54FF" />
+                <Text style={{fontWeight: '400', color: '#ED4E54FF', fontSize: 20}}>Are you sure?</Text>
               </View>
               <View style={styles.hr1}></View>
               <View style={styles.modalBottom}>
@@ -142,6 +149,28 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   deleteText:{
+    fontWeight: 'bold',
+    color: 'white'
+  },
+
+  updateBtn:{
+    backgroundColor: "steelblue",
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    marginTop: 20,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 3,
+  },
+  updateText:{
     fontWeight: 'bold',
     color: 'white'
   },
